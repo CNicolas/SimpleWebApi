@@ -1,9 +1,7 @@
-﻿using SimpleWebApi.Helpers;
-using System;
+﻿using SimpleWebApi.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Web.Http;
 
 namespace SimpleWebApi.Controllers
@@ -11,6 +9,13 @@ namespace SimpleWebApi.Controllers
     public class ConfidentialsController : ApiController
     {
         public const string Realm = "SimpleWebApi";
+
+        private CredentialsRepository _credentialsRepository;
+
+        public ConfidentialsController(CredentialsRepository credentialsRepository)
+        {
+            _credentialsRepository = credentialsRepository;
+        }
 
         [HttpGet]
         public IHttpActionResult ConfidentialsGet()
@@ -22,7 +27,7 @@ namespace SimpleWebApi.Controllers
 
                 if (CheckFormatOfAuthorizationHeader(authorizationHeaderValue))
                 {
-                    if (CheckCredentialsHelper.CheckCredentials(authorizationHeaderValue.Parameter))
+                    if (_credentialsRepository.ParseAndCheckBase64CredentialsString(authorizationHeaderValue.Parameter))
                     {
                         return Ok(true);
                     }
@@ -50,7 +55,7 @@ namespace SimpleWebApi.Controllers
 
                 if (CheckFormatOfAuthorizationHeader(authorizationHeaderValue))
                 {
-                    if (CheckCredentialsHelper.CheckCredentials(authorizationHeaderValue.Parameter))
+                    if (_credentialsRepository.ParseAndCheckBase64CredentialsString(authorizationHeaderValue.Parameter))
                     {
                         return Ok(true);
                     }

@@ -93,9 +93,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CheckCredentialsHelper.cs" />
     <Compile Include="Models\AuthenticationParameters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CredentialsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
